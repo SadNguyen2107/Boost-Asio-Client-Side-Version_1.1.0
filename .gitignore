@@ -29,6 +29,8 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+[Ll]ib/
+[Ll]ibs/
 [Ll]og/
 [Ll]ogs/
 
@@ -377,6 +379,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # VS Code files for those working on multiple tools
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

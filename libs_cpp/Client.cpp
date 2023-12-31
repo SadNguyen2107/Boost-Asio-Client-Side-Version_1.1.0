@@ -165,9 +165,6 @@ namespace SN_Client
             }
         }
 
-        // Send an end signal
-        this->SendEndSignal();
-
         // Check If All data has been sent
         if (total_sent == text.size())
         {
@@ -177,6 +174,9 @@ namespace SN_Client
         {
             std::cerr << "Not all data sent. Total sent: " << total_sent << " bytes out of " << text.size() << " bytes." << std::endl;
         }
+
+        //! Send an end signal
+        this->SendEndSignal();
     }
 
     /**
@@ -209,11 +209,17 @@ namespace SN_Client
         // The Variable To check For The Bytes Have Send
         std::size_t total_sent = 0;
 
+        // Error if Thrown
+        boost::system::error_code error;
+
         while (std::getline(text_file, chunk, static_cast<char>(EOF)) && !chunk.empty())
         {
             // Synchronous write
-            boost::system::error_code error;
-            std::size_t bytes_sent = boost::asio::write(*client_socket, boost::asio::buffer(chunk), error);
+            std::size_t bytes_sent = boost::asio::write(
+                *client_socket, 
+                boost::asio::buffer(chunk), 
+                error
+            );
 
             // Check Whether Error Happen
             if (!error)
@@ -254,6 +260,9 @@ namespace SN_Client
             std::cerr << "Not all data sent. Total sent: " << total_sent << " bytes out of "
                       << boost::filesystem::file_size(file_to_send) << " bytes." << std::endl;
         }
+
+        //! Send an end signal
+        this->SendEndSignal();
     }
 
     /**

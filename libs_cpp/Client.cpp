@@ -165,9 +165,6 @@ namespace SN_Client
             }
         }
 
-        // Send an end signal
-        this->SendEndSignal();
-
         // Check If All data has been sent
         if (total_sent == text.size())
         {
@@ -177,6 +174,9 @@ namespace SN_Client
         {
             std::cerr << "Not all data sent. Total sent: " << total_sent << " bytes out of " << text.size() << " bytes." << std::endl;
         }
+
+        //! Send an end signal
+        this->SendEndSignal();
     }
 
     /**
@@ -256,6 +256,9 @@ namespace SN_Client
             std::cerr << "Not all data sent. Total sent: " << total_sent << " bytes out of "
                       << boost::filesystem::file_size(file_to_send) << " bytes." << std::endl;
         }
+
+        //! Send an end signal
+        this->SendEndSignal();
     }
 
     /**
